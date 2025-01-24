@@ -1,5 +1,6 @@
 package com.example.dislacfle.domain.user.entity;
 
+import com.example.dislacfle.domain.userWorkSpace.entity.UserWorkSpace;
 import com.example.dislacfle.global.common.BaseEntity;
 import com.example.dislacfle.global.common.ErrorCode;
 import com.example.dislacfle.global.exception.UserException;

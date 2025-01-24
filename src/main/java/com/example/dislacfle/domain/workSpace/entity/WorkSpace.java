@@ -2,7 +2,7 @@ package com.example.dislacfle.domain.workSpace.entity;
 
 import com.example.dislacfle.domain.channel.entity.Channel;
 import com.example.dislacfle.domain.user.entity.User;
-import com.example.dislacfle.domain.user.entity.UserWorkSpace;
+import com.example.dislacfle.domain.userWorkSpace.entity.UserWorkSpace;
 import com.example.dislacfle.global.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
