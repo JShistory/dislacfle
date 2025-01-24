@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -22,4 +23,10 @@ public class WorkSpace extends BaseEntity {
     private List<UserWorkSpace> users = new ArrayList<>();
     @OneToMany
     private List<Channel> channels = new ArrayList<>();
+    @Builder
+    private WorkSpace(String spaceName, List<UserWorkSpace> users, List<Channel> channels) {
+        this.spaceName = spaceName;
+        this.users = users;
+        this.channels = channels;
+    }
 }
