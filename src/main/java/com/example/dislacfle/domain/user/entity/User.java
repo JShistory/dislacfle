@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -23,13 +24,16 @@ public class User extends BaseEntity {
     private String nickname;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+    @OneToMany
+    private List<UserWorkSpace> workSpaces;
 
     @Builder
-    private User(String username, String password, String nickname, UserRole userRole) {
+    private User(String username, String password, String nickname, UserRole userRole, List<UserWorkSpace> workSpaces) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.userRole = userRole;
+        this.workSpaces = workSpaces;
     }
 
     public void changPassword(String password) {
