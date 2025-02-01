@@ -5,6 +5,7 @@ import com.example.dislacfle.domain.workSpace.entity.WorkSpace;
 import com.example.dislacfle.global.common.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,4 +17,21 @@ public class UserWorkSpace extends BaseEntity {
     private User user;
     @ManyToOne
     private WorkSpace workSpace;
+
+    @Builder
+    public UserWorkSpace(User user, WorkSpace workSpace) {
+        this.user = user;
+        this.workSpace = workSpace;
+    }
+
+    public UserWorkSpace() {
+
+    }
+
+    public static UserWorkSpace createUserWorkSpace(User user, WorkSpace workSpace) {
+        return UserWorkSpace.builder()
+                .user(user)
+                .workSpace(workSpace)
+                .build();
+    }
 }
