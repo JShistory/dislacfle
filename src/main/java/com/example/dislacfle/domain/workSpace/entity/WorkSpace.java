@@ -7,6 +7,7 @@ import com.example.dislacfle.global.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,14 +38,5 @@ public class WorkSpace extends BaseEntity {
     public void addChannels(Channel channel) {
         this.channels.add(channel);
         channel.setWorkSpace(this);
-    }
-
-    public Channel createDefaultChannel() {
-        Channel channel = Channel.builder()
-                .channelName("Default Channel")
-                .workSpace(this)
-                .build();
-        this.channels.add(channel);
-        return channel;
     }
 }

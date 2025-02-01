@@ -7,6 +7,7 @@ import com.example.dislacfle.domain.user.repository.UserRepository;
 import com.example.dislacfle.domain.userWorkSpace.entity.UserWorkSpace;
 import com.example.dislacfle.domain.userWorkSpace.repository.UserWorkSpaceRepository;
 import com.example.dislacfle.domain.workSpace.entity.WorkSpace;
+import com.example.dislacfle.domain.workSpace.entity.dto.ChannelDTO;
 import com.example.dislacfle.domain.workSpace.entity.dto.WorkSpaceDTO;
 import com.example.dislacfle.domain.workSpace.repository.WorkSpaceRepository;
 import com.example.dislacfle.global.common.ErrorCode;
@@ -34,26 +35,19 @@ public class WorkSpaceService {
                 .build();
 
         // 유저-워크스페이스 관계 생성
-        UserWorkSpace userWorkSpace = createUserWorkSpace(user, workSpace);
+        UserWorkSpace userWorkSpace = UserWorkSpace.createUserWorkSpace(user, workSpace);
+        workSpace.addUsers(userWorkSpace);
+        user.addWorkSpaces(userWorkSpace);
         userWorkSpaceRepository.save(userWorkSpace);
 
         //기본 채널 생성
-        Channel defaultChannel = workSpace.createDefaultChannel();
+        Channel defaultChannel = Channel.createDefaultChannel(workSpace);
+        workSpace.addChannels(defaultChannel);
         channelRepository.save(defaultChannel);
 
         // 워크스페이스 저장
         workSpaceRepository.save(workSpace);
 
         return workSpace.getId();
-    }
-
-    private UserWorkSpace createUserWorkSpace(User user, WorkSpace workSpace) {
-        UserWorkSpace userWorkSpace = new UserWorkSpace();
-        userWorkSpace.setUser(user);
-        userWorkSpace.setWorkSpace(workSpace);
-
-        workSpace.addUsers(userWorkSpace);
-        user.addWorkSpaces(userWorkSpace);
-        return userWorkSpace;
     }
 }
