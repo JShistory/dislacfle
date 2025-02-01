@@ -9,24 +9,42 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class WorkSpace extends BaseEntity {
     @Column(name = "spaceName", unique = true, nullable = false)
     private String spaceName;
-    @OneToMany
+    @OneToMany(mappedBy = "workSpace")
     private List<UserWorkSpace> users = new ArrayList<>();
-    @OneToMany
+    @OneToMany(mappedBy = "workSpace")
     private List<Channel> channels = new ArrayList<>();
     @Builder
-    private WorkSpace(String spaceName, List<UserWorkSpace> users, List<Channel> channels) {
+    private WorkSpace(String spaceName) {
         this.spaceName = spaceName;
-        this.users = users;
-        this.channels = channels;
+    }
+
+    public void addUsers(UserWorkSpace userWorkSpace) {
+        this.users.add(userWorkSpace);
+        userWorkSpace.setWorkSpace(this);
+    }
+
+    public void addChannels(Channel channel) {
+        this.channels.add(channel);
+        channel.setWorkSpace(this);
+    }
+
+    public Channel createDefaultChannel() {
+        Channel channel = Channel.builder()
+                .channelName("Default Channel")
+                .workSpace(this)
+                .build();
+        this.channels.add(channel);
+        return channel;
     }
 }
