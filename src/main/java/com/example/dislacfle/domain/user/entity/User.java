@@ -5,6 +5,7 @@ import com.example.dislacfle.global.common.BaseEntity;
 import com.example.dislacfle.global.common.ErrorCode;
 import com.example.dislacfle.global.exception.UserException;
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,22 +20,21 @@ import java.util.Objects;
 public class User extends BaseEntity {
     @Column(name = "username", unique = true, nullable = false)
     private String username;
-    @Column(name = "password", unique = true, nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "nickname", unique = true)
+    @Column(name = "nickname")
     private String nickname;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    @OneToMany
-    private List<UserWorkSpace> workSpaces;
+    @OneToMany(mappedBy = "user")
+    private List<UserWorkSpace> workSpaces = new ArrayList<>();
 
     @Builder
-    private User(String username, String password, String nickname, UserRole userRole, List<UserWorkSpace> workSpaces) {
+    private User(String username, String password, String nickname, UserRole userRole) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.userRole = userRole;
-        this.workSpaces = workSpaces;
     }
 
     public void changPassword(String password) {
@@ -49,5 +49,10 @@ public class User extends BaseEntity {
             throw new UserException(ErrorCode.DUPLICATE_NICKNAME);
         }
         this.nickname = nickname;
+    }
+
+    public void addWorkSpaces(UserWorkSpace userWorkSpace) {
+        this.workSpaces.add(userWorkSpace);
+        userWorkSpace.setUser(this);
     }
 }
