@@ -1,5 +1,7 @@
 package com.example.dislacfle.domain.workSpace.controller;
 
+import com.example.dislacfle.domain.channel.service.ChannelService;
+import com.example.dislacfle.domain.workSpace.entity.dto.ChannelDTO;
 import com.example.dislacfle.domain.workSpace.entity.dto.WorkSpaceDTO;
 import com.example.dislacfle.domain.workSpace.service.WorkSpaceService;
 import com.example.dislacfle.global.common.ApiResponse;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WorkSpaceController {
     private final WorkSpaceService workSpaceService;
+    private final ChannelService channelService;
 
     @PostMapping
     public ResponseEntity<ApiResponse<Long>> createWorkSpace(@RequestBody WorkSpaceDTO workSpaceDTO) {
@@ -23,5 +26,13 @@ public class WorkSpaceController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ApiResponse.success("WorkSpace created successfully", workSpaceId));
+    }
+
+    @PostMapping("/channels")
+    public ResponseEntity<ApiResponse<?>> createChannel(@RequestBody ChannelDTO channelDTO) {
+        String channelUuid = channelService.createChannel(channelDTO);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(ApiResponse.success("in WorkSpace created Channel successfully", channelUuid));
     }
 }
