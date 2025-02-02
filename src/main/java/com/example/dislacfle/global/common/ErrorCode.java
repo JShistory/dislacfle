@@ -20,7 +20,10 @@ public enum ErrorCode {
 
     // Channel errors
     DUPLICATE_CHANNEL_NAME(400, "C001", "이미 존재하는 채널명입니다."),
-    CHANNEL_NOT_FOUND(404, "C002", "채널을 찾을 수 없습니다.");
+    CHANNEL_NOT_FOUND(404, "C002", "채널을 찾을 수 없습니다."),
+
+    // WorkSpace
+    WORKSPACE_NOT_FOUND(404, "W001", "워크스페이스를 찾을 수 없습니다.");
 
     private final int status;
     private final String code;
