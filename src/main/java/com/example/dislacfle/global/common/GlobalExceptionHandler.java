@@ -12,15 +12,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserException.class)
     public ResponseEntity<ApiResponse<?>> handleUserException(UserException e) {
         ErrorCode errorCode = e.getErrorCode();
-        ApiResponse<?> response = ApiResponse.builder()
-                .success(false)
-                .message(errorCode.getMessage())
-                .data(null)
-                .build();
 
         return ResponseEntity
                 .status(HttpStatus.valueOf(errorCode.getStatus()))
-                .body(response);
+                .body(ApiResponse.failure(errorCode.getMessage()));
     }
 
 }
